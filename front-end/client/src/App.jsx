@@ -1,23 +1,20 @@
-import { useState } from 'react'
-import React from 'react'
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "./components/home/HomePage";
+import MainLayout from "./components/layout/MainLayout";
+import ProductPage from "./components/products/ProductPage";
+import NotFoundPage from "./components/ui/NotFoundPage";
 
-import './App.css'
-import Navbar from './components/ui/Navbar'
-import Header from './components/home/Header'
-import Footer from './components/ui/footer'
-import CardContainer from './components/home/CardContainer'
-
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-    <Navbar />
-      <Header />
-        <CardContainer />
-    <Footer />
-    </>
-  )
-}
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+      <Route index element={<HomePage />} />
+      <Route path="products/:slug" element={<ProductPage />}></Route>  
+      <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  );
+};
 
-export default App
+export default App; 
