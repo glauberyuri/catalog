@@ -1,6 +1,7 @@
 import React from 'react'
 import api from '../../Api'
 import CardContainer from './CardContainer'
+import Carousel from '../ui/Carousel'
 import Header from './Header'
 import Error from '../ui/Error'
 import { useEffect, useState } from 'react'
@@ -32,6 +33,7 @@ const HomePage = () => {
     <>
         <Header />
         {error && <Error error={error}/> }
+        <Carousel />
         <CardContainer products={products} loading={loading}/>
     </>
   )
