@@ -10,6 +10,8 @@ class Product(models.Model) :
     image = models.ImageField(upload_to="img")
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
+    color = models.CharField(max_length=50, blank=True, null=True)
+    size = models.CharField(max_length=5, blank=True, null=True)
     category = models.CharField(max_length=15, choices=CATEGORY, blank=True, null=True)
 
     def __str__(self):

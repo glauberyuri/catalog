@@ -26,7 +26,7 @@ const ProductPage = () => {
         console.log(err.message)
         setLoading(false)
       })
-  }, [])
+  }, [slug])
   return (
     <div>
       {loading ?  

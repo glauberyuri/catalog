@@ -3,6 +3,7 @@ import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import { Carousel, CarouselContent, CarouselItem } from "../ui/Carousel.tsx";
 import { BASE_URL } from '../../Api';
+import { Link } from 'react-router-dom';
 
 const RelatedProducts = ({products}) => {
   return (
@@ -18,23 +19,25 @@ const RelatedProducts = ({products}) => {
       <Carousel className="w-full">
         <CarouselContent className="-ml-2 md:-ml-4">
           {products.map((product) => (
-            <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/4">
-              <div className="product-card">
-                <div className="relative overflow-hidden rounded-t-lg">
-                  <img 
-                    src={`${BASE_URL}${product.image}`}
-                    alt={product.name}
-                    className="w-full h-40 object-cover"
-                  />
+            <Link to={`/products/${product.slug}`} >
+              <CarouselItem key={product.id} className="pl-2 md:pl-4 basis-1/2 sm:basis-1/3 lg:basis-1/4">
+                <div className="product-card">
+                  <div className="relative overflow-hidden rounded-t-lg">
+                    <img 
+                      src={`${BASE_URL}${product.image}`}
+                      alt={product.name}
+                      className="w-full h-40 object-cover"
+                    />
+                  </div>
+                  <div className="p-3">
+                    <h3 className="font-medium text-sm truncate">{product.name}</h3>
+                    <p className="text-primary font-bold mt-1">
+                      R$ {product.price}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-3">
-                  <h3 className="font-medium text-sm truncate">{product.name}</h3>
-                  <p className="text-primary font-bold mt-1">
-                    R$ {product.price}
-                  </p>
-                </div>
-              </div>
-            </CarouselItem>
+              </CarouselItem>
+            </Link>
           ))}
         </CarouselContent>
       </Carousel>

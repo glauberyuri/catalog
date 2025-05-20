@@ -8,7 +8,7 @@ const CardContainer = ({ products, loading }) => {
   const gridClasses =
     productList.length === 1
       ? "grid-cols-1" 
-      : "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-6";
+      : "grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 lg:p-6 lg:gap-6";
 
   return (
     <div className="py-4 bg-gray-50">
