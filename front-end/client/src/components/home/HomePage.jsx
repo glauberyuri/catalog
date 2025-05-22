@@ -5,6 +5,7 @@ import Carousel from '../ui/Carousel'
 import Header from './Header'
 import Error from '../ui/Error'
 import { useEffect, useState } from 'react'
+import { randomValue } from '../../../../../back-end/catalog_app/GenerateCartCode'
 
 const HomePage = () => {
 
@@ -12,6 +13,11 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false) 
   const [error, setError] = useState("")
   
+  useEffect(function(){
+    if(localStorage.getItem("cart_code") === null){
+      localStorage.setItem("cart_code", randomValue)
+    }
+  })
   useEffect(() => {
   setLoading(true)
   api.get("products")

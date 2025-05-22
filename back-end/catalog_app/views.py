@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from .models import Product, Cart, CartItem
 from .serializers import ProductSerializer, DetailedProductSerializer, CartItemSerializer
 from rest_framework.response import Response
+from django.db.models import F, Sum, DecimalField, ExpressionWrapper
 
 # Create your views here.
 
@@ -32,6 +33,16 @@ def add_item(request):
         cartitem, created = CartItem.objects.get_or_create(cart=cart, product=product)
         cartitem.quantity = quantity
         cartitem.save()
+
+        # Calcula o total do carrinho
+        total = CartItem.objects.filter(cart=cart).annotate(
+            item_total=ExpressionWrapper(F('quantity') * F('product__price'), output_field=DecimalField())
+        ).aggregate(total=Sum('item_total'))['total'] or 0
+
+        # Salva o total no carrinho
+        cart.total = total
+        cart.save()
+
 
         serializer = CartItemSerializer(cartitem)
 

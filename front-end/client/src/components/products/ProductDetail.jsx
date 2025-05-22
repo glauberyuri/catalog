@@ -10,6 +10,8 @@ import SizeSelector from '../products/SizeSelector';
 import QuantitySelector from '../products/QuantitySelector';
 import ProductInfo from '../products/ProductInfo';
 import ProductActions from '../products/ProductActions';
+import api from "../../Api"
+
 
 const product = {
   id: 1,
@@ -51,12 +53,22 @@ const ProductDetail = ({products, similarProducts}) => {
   const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(product.colors[0].id);
   const [selectedSize, setSelectedSize] = useState(product.sizes[1]);
+  const [inCart, setInCart] = useState(false)
   const [quantity, setQuantity] = useState(1);
+  const cart_code = localStorage.getItem("cart_code");
 
-  const handleAddToCart = () => {
-    // Aqui adicionaríamos a lógica para adicionar ao carrinho
-    navigate('/cart');
-  };
+
+  const newItem = {cart_code: cart_code, product_id: product.id, quantity: quantity}
+  function add_item(){
+    api.post("add_item/", newItem)
+     .then(res => {
+        console.log(res.data, "sucesso na criação")
+        setInCart(true)
+     })
+     .catch(err =>{
+      console.log(err.message, 'erro ao cadastrar item')
+     })
+  }
 
   const handleBuyNow = () => {
     // Aqui adicionaríamos a lógica para compra direta
@@ -131,7 +143,7 @@ const ProductDetail = ({products, similarProducts}) => {
 
       {/* Fixed Bottom Bar */}
       <ProductActions 
-        onAddToCart={handleAddToCart} 
+        onAddToCart={add_item} 
         onBuyNow={handleBuyNow} 
       />
     </div>

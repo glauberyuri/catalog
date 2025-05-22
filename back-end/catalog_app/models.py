@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.conf import settings
 # Create your models here.
 class Product(models.Model) :
     CATEGORY = (("Personalizados", "PERSONALIZADOS"),
@@ -30,8 +31,8 @@ class Product(models.Model) :
         super().save(*args,**kwargs)
 
 class Cart(models.Model):
-    cart_mode = models.CharField(max_length=11, unique=True)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True)
+    cart_code = models.CharField(max_length=11, unique=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     session_id = models.CharField(max_length=255, blank=True, null=True)  # para visitantes não logados
     status = models.CharField(max_length=20, choices=[('active', 'Ativo'), ('paid', 'Pago'), ('abandoned', 'Abandonado')], default='active')
     total = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -39,13 +40,13 @@ class Cart(models.Model):
     modified_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 
     def __str__(self) -> str:
-        return self.cart_mode
+        return self.cart_code
     
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)  # preço unitário congelado no momento da adição
+   
 
     @property
     def subtotal(self):
