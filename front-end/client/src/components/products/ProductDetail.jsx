@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductGallery from '../products/ProductGallery';
 import RelatedProducts from '../products/ProductRelated';
@@ -57,6 +57,19 @@ const ProductDetail = ({products, similarProducts}) => {
   const [quantity, setQuantity] = useState(1);
   const cart_code = localStorage.getItem("cart_code");
 
+  useEffect(() => {
+    if(product.id)
+    {
+      api.get(`product_in_cart?cart_code=${cart_code}&product_id=${product.id}`)
+      .then(res => {
+        console.log(res.data)
+        setInCart(res.data.product_in_cart)
+      })
+      .catch(err => {
+        console.log(err.message)
+      })
+    }
+  }, [cart_code, product.id])
 
   const newItem = {cart_code: cart_code, product_id: product.id, quantity: quantity}
   function add_item(){

@@ -5,7 +5,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("products", views.products, name="products"),
     path("detail_product/<slug:slug>", views.product_detail, name="product_detail"),
-    path("add_item/", views.add_item, name="add_item")
+    path("add_item/", views.add_item, name="add_item"),
+    path("product_in_cart", views.product_in_cart, name="product_in_cart")
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
