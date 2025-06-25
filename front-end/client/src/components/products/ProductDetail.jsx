@@ -49,7 +49,7 @@ const product = {
   }
 };
 
-const ProductDetail = ({products, similarProducts}) => {
+const ProductDetail = ({products, similarProducts, numCartItems, setNumerCartItems}) => {
   const navigate = useNavigate();
   const [selectedColor, setSelectedColor] = useState(product.colors[0].id);
   const [selectedSize, setSelectedSize] = useState(product.sizes[1]);
@@ -77,6 +77,7 @@ const ProductDetail = ({products, similarProducts}) => {
      .then(res => {
         console.log(res.data, "sucesso na criação")
         setInCart(true)
+        setNumerCartItems(curr => curr + 1)
      })
      .catch(err =>{
       console.log(err.message, 'erro ao cadastrar item')
@@ -91,7 +92,7 @@ const ProductDetail = ({products, similarProducts}) => {
   return (
     <div className="pb-16 bg-gray-50">
       {/* Header */}
-      <ProductHeader productId={product.id} productName={product.name} />
+      <ProductHeader productId={product.id} productName={product.name} numCartItems={numCartItems}/>
 
       <div className="pt-16 pb-24"> 
 

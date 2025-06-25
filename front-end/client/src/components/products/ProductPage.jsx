@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import api from "../../Api"
 import Skeleton from '../ui/Skeleton'
 
-const ProductPage = () => {
+const ProductPage = ({numCartItems, setNumerCartItems}) => {
   const { slug } = useParams()
   const [products, setProducts] = useState({})
   const [similarProducts, setSimilarProducts ] = useState([])
@@ -33,7 +33,7 @@ const ProductPage = () => {
         <Skeleton type="product-detail"/>  
         :  
         <div>
-          <ProductDetail products={products} similarProducts={similarProducts}/> 
+          <ProductDetail products={products}  setNumerCartItems={setNumerCartItems} similarProducts={similarProducts} numCartItems={numCartItems}/> 
         </div>
       }
     </div>

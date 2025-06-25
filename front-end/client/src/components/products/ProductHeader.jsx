@@ -2,8 +2,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, Heart } from 'lucide-react';
+import IconCart from "../ui/IconCart";
 
-const ProductHeader = ({ productId, productName }) => {
+const ProductHeader = ({ productId, productName, numCartItems}) => {
   const navigate = useNavigate();
   
   return (
@@ -17,10 +18,12 @@ const ProductHeader = ({ productId, productName }) => {
         </button>
         <h1 className="text-lg font-semibold truncate flex-1">Detalhes do Produto</h1>
         <div className="flex gap-2">
+            {/* Ícone do Carrinho */}
+            <IconCart numCartItems={numCartItems} />
 
-          <button className="p-2 rounded-full bg-gray-100">
-            <Heart size={18} />
-          </button>
+            <button className="p-2 rounded-full bg-gray-100">
+              <Heart size={18} />
+            </button>
         </div>
       </div>
     </div>
